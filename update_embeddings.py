@@ -12,10 +12,9 @@ from qdrant_client.models import VectorParams, Distance
 from langchain.text_splitter import CharacterTextSplitter
 
 load_dotenv()
-
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
-QDRANT_URL = os.getenv('QDRANT_URL')
+OPENAI_API_KEY = st.secrets["openai"]["api_key"]
+QDRANT_API_KEY = st.secrets["qdrant"]["api_key"]
+QDRANT_URL = st.secrets["qdrant"]["url"]
 
 def find_bucket_key(s3_path):
   
@@ -86,8 +85,8 @@ def update_embeddings(files_uploaded):
     # s3 = boto3.client('s3')
     s3_client = boto3.client(
         's3',  
-        aws_access_key_id=os.getenv('aws_access_key_id'),
-        aws_secret_access_key=os.getenv('aws_secret_access_key'),
+        aws_access_key_id=st.secrets["aws"]["access_key_id"],  # Accessing secrets from Streamlit's secrets
+        aws_secret_access_key=st.secrets["aws"]["secret_access_key"],
         region_name='us-east-1' 
     )
     openai_client = openai.Client(api_key=OPENAI_API_KEY)

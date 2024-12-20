@@ -15,8 +15,8 @@ load_dotenv()
 # Initialize a session using Amazon S3
 s3_client = boto3.client(
     's3',
-    aws_access_key_id=os.getenv('aws_access_key_id'),
-    aws_secret_access_key=os.getenv('aws_secret_access_key'),
+    aws_access_key_id=st.secrets["aws"]["access_key_id"],  # Accessing secrets from Streamlit's secrets
+    aws_secret_access_key=st.secrets["aws"]["secret_access_key"],
 )
 
 def upload_to_s3(file_name, file_data, bucket):
