@@ -109,6 +109,7 @@ def update_embeddings(files_uploaded):
         results = openai_client.embeddings.create(input=text_chunks, model=embedding_model)
         embed_points = create_qdrant_points(results,text_chunks)
         qdrant_upsert(qclient,embed_points)
+        print(f"File: {file} is uploaded")
 
 def main():
     files_to_upload = list(json.loads(requests.get('http://10.1.208.192:9000/docuements').text)['folders'].values())
