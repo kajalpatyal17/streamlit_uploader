@@ -5,6 +5,7 @@ import datetime
 from io import BytesIO
 from dotenv import load_dotenv
 import emoji
+from update_embeddings import main as update_embedds
 
 # Predefined username and password (this could be replaced by a more secure authentication mechanism)
 USERNAME = "admin"
@@ -115,7 +116,7 @@ def show_app():
                 filename, extension = uploaded_file.name.split('.')
                 # Call function to upload the file to S3
                 upload_to_s3(f'{selected_value}/{filename}_{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}.{extension}', file_data, bucket_name)
-
+                update_embedds()
                 # Show file name and preview
                 st.write(f"Uploaded file: {uploaded_file.name}")
 

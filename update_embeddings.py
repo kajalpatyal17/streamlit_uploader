@@ -10,6 +10,8 @@ import openai
 from qdrant_client.models import PointStruct
 from qdrant_client.models import VectorParams, Distance
 from langchain.text_splitter import CharacterTextSplitter
+import requests
+import json
 
 load_dotenv()
 OPENAI_API_KEY = st.secrets["openai"]["api_key"]
@@ -109,13 +111,8 @@ def update_embeddings(files_uploaded):
         qdrant_upsert(qclient,embed_points)
 
 def main():
-    files_to_upload = {
-        's3://gc-ai-spoc-document-ftp/TEST/TEST_20241220103653.pdf',
-        's3://gc-ai-spoc-document-ftp/FBP_PLUXEE/FBP_PLUXEE_20241220105735.pdf',
-        's3://gc-ai-spoc-document-ftp/FBP_FAQ/FBP_FAQ_20241220104820.pdf'
-        }
+    files_to_upload = list(json.loads(requests.get('http://10.1.208.192:9000/docuements').text)['folders'].values())
     update_embeddings(files_to_upload)
 
-if __name__ == '__main__':
-    main()
+
 
