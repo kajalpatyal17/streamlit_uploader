@@ -104,13 +104,16 @@ def show_app():
     bucket_name= 'gc-ai-spoc-document-ftp'
 
     uploaded_file = st.file_uploader(
-        "Choose a file to upload and click on 'Upload'", )
+        "Choose a file to upload and click on 'Upload'",type=["pdf"])
     if st.button("Upload"):
 
         with st.spinner("Processing"):
 
             if uploaded_file is not None:
-                
+
+                if uploaded_file.type != "application/pdf":
+                    st.error("Please upload a valid PDF file.")
+                    
                 # Convert the uploaded file to BytesIO (in-memory)
                 file_data = BytesIO(uploaded_file.read())
                 filename, extension = uploaded_file.name.split('.')
@@ -119,6 +122,7 @@ def show_app():
                 update_embedds()
                 # Show file name and preview
                 st.write(f"Uploaded file: {uploaded_file.name}")
+            
 
 # Main logic for controlling flow
 def main():
