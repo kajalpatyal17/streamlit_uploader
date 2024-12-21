@@ -14,13 +14,13 @@ import requests
 import json
 
 load_dotenv()
-# OPENAI_API_KEY = st.secrets["openai"]["api_key"]
-# QDRANT_API_KEY = st.secrets["qdrant"]["api_key"]
-# QDRANT_URL = st.secrets["qdrant"]["url"]
+OPENAI_API_KEY = st.secrets["openai"]["api_key"]
+QDRANT_API_KEY = st.secrets["qdrant"]["api_key"]
+QDRANT_URL = st.secrets["qdrant"]["url"]
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
-QDRANT_URL = os.getenv('QDRANT_URL')
+# OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+# QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
+# QDRANT_URL = os.getenv('QDRANT_URL')
 
 def find_bucket_key(s3_path):
   
