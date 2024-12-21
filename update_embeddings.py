@@ -14,13 +14,13 @@ import requests
 import json
 
 load_dotenv()
-# OPENAI_API_KEY = st.secrets["openai"]["api_key"]
-# QDRANT_API_KEY = st.secrets["qdrant"]["api_key"]
-# QDRANT_URL = st.secrets["qdrant"]["url"]
+OPENAI_API_KEY = st.secrets["openai"]["api_key"]
+QDRANT_API_KEY = st.secrets["qdrant"]["api_key"]
+QDRANT_URL = st.secrets["qdrant"]["url"]
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
-QDRANT_URL = os.getenv('QDRANT_URL')
+# OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+# QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
+# QDRANT_URL = os.getenv('QDRANT_URL')
 
 def find_bucket_key(s3_path):
   
@@ -92,10 +92,10 @@ def update_embeddings(files_uploaded):
     # print(os.getenv("OPENAI_API_KEY"))
     s3_client = boto3.client(
         's3',  
-        # aws_access_key_id=st.secrets["aws"]["aws_access_key_id"],  # Accessing secrets from Streamlit's secrets
-        # aws_secret_access_key=st.secrets["aws"]["aws_secret_access_key"],
-        aws_access_key_id=os.getenv("aws_access_key_id"),  # Accessing secrets from Streamlit's secrets
-        aws_secret_access_key=os.getenv("aws_secret_access_key"),
+        aws_access_key_id=st.secrets["aws"]["aws_access_key_id"],  # Accessing secrets from Streamlit's secrets
+        aws_secret_access_key=st.secrets["aws"]["aws_secret_access_key"],
+        # aws_access_key_id=os.getenv("aws_access_key_id"),  # Accessing secrets from Streamlit's secrets
+        # aws_secret_access_key=os.getenv("aws_secret_access_key"),
         region_name='us-east-1' 
     )
     print(OPENAI_API_KEY)
