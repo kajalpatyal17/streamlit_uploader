@@ -112,7 +112,7 @@ def update_embeddings(files_uploaded):
         print(f"File: {file} is uploaded")
 
 def main():
-    files_to_upload = list(json.loads(requests.get('http://10.1.208.192:9000/docuements').text)['folders'].values())
+    files_to_upload = list(json.loads(requests.get('http://184.72.86.235/docuements').text)['folders'].values())
     update_embeddings(files_to_upload)
 
 
