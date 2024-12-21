@@ -89,11 +89,11 @@ def qdrant_upsert(client,points):
 
 def update_embeddings(files_uploaded):
     # s3 = boto3.client('s3')
-    print(os.getenv("OPENAI_API_KEY"))
+    # print(os.getenv("OPENAI_API_KEY"))
     s3_client = boto3.client(
         's3',  
-        aws_access_key_id=os.getenv("aws_access_key_id"),  # Accessing secrets from Streamlit's secrets
-        aws_secret_access_key=os.getenv("aws_secret_access_key"),
+        aws_access_key_id=st.secrets["aws"]["aws_access_key_id"],  # Accessing secrets from Streamlit's secrets
+        aws_secret_access_key=st.secrets["aws"]["aws_secret_access_key"],
         region_name='us-east-1' 
     )
     print(OPENAI_API_KEY)
