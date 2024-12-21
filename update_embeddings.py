@@ -14,9 +14,13 @@ import requests
 import json
 
 load_dotenv()
-OPENAI_API_KEY = st.secrets["openai"]["api_key"]
-QDRANT_API_KEY = st.secrets["qdrant"]["api_key"]
-QDRANT_URL = st.secrets["qdrant"]["url"]
+# OPENAI_API_KEY = st.secrets["openai"]["api_key"]
+# QDRANT_API_KEY = st.secrets["qdrant"]["api_key"]
+# QDRANT_URL = st.secrets["qdrant"]["url"]
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+QDRANT_API_KEY = os.getenv('QDRANT_API_KEY')
+QDRANT_URL = os.getenv('QDRANT_URL')
 
 def find_bucket_key(s3_path):
   
@@ -85,12 +89,14 @@ def qdrant_upsert(client,points):
 
 def update_embeddings(files_uploaded):
     # s3 = boto3.client('s3')
+    print(os.getenv("OPENAI_API_KEY"))
     s3_client = boto3.client(
         's3',  
-        aws_access_key_id=st.secrets["aws"]["access_key_id"],  # Accessing secrets from Streamlit's secrets
-        aws_secret_access_key=st.secrets["aws"]["secret_access_key"],
+        aws_access_key_id=os.getenv("aws_access_key_id"),  # Accessing secrets from Streamlit's secrets
+        aws_secret_access_key=os.getenv("aws_secret_access_key"),
         region_name='us-east-1' 
     )
+    print(OPENAI_API_KEY)
     openai_client = openai.Client(api_key=OPENAI_API_KEY)
     qclient = qdrant_client.QdrantClient(
         url=QDRANT_URL,
@@ -112,8 +118,7 @@ def update_embeddings(files_uploaded):
         print(f"File: {file} is uploaded")
 
 def main():
-    files_to_upload = list(json.loads(requests.get('http://184.72.86.235/docuements').text)['folders'].values())
+    # files_to_upload = list(json.loads(requests.get('http://184.72.86.235/docuements').text)['folders'].values())
+    files_to_upload = ['s3://gc-ai-spoc-document-ftp/FBP_FAQ/FAQs - FBP & Reimbursement Process - FY 2025.pdf', 's3://gc-ai-spoc-document-ftp/FBP_PLUXEE/Flexible Benefit Plan_20241221014904.pdf', 's3://gc-ai-spoc-document-ftp/INSURANCE_CLAIMS/Insurance Claim Reimbursement Process_20241221014746.pdf', 's3://gc-ai-spoc-document-ftp/NEWERS_HANDBOOK/Newers Handbook - Hybrid Work Model_20241220215849.pdf', 's3://gc-ai-spoc-document-ftp/Office_not_to_do/10 things NOT to be done in Office_20241221010651.pdf', 's3://gc-ai-spoc-document-ftp/PAYROLL_FAQ/Payroll - FAQs- FY 2025_20241221005244.pdf']
     update_embeddings(files_to_upload)
-
-
 
